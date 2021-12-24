@@ -1,0 +1,144 @@
+﻿@model Nhom3.Core.ViewModels.OrderDetails
+@using System.Globalization;
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row bg-primary">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="text-align:left;">Chi tiết đơn hàng</h1>
+    </div>
+</div>
+<div class="row" style="margin-top:20px;">
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaHoaDon, htmlAttributes: new { @class = "bmd-label-floating", @style = "float:left" })
+            @Html.EditorFor(model => model.MaHoaDon, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(model => model.taiKhoan, htmlAttributes: new { @class = "bmd-label-floating", @style = "float:left" })
+            @Html.EditorFor(model => model.taiKhoan, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(model => model.NgayDat, htmlAttributes: new { @class = "bmd-label-floating", @style = "float:left" })
+            @Html.EditorFor(model => model.NgayDat, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(model => model.TinhTrang, htmlAttributes: new { @class = "bmd-label-floating", @style = "float:left" })
+            @Html.EditorFor(model => model.TinhTrang, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhiShip, htmlAttributes: new { @class = "bmd-label-floating", @style = "float:left" })
+            @Html.EditorFor(model => model.PhiShip, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(model => model.GhiChu, htmlAttributes: new { @class = "bmd-label-floating", @style = "float:left" })
+            @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(model => model.DcNhanHang, htmlAttributes: new { @class = "bmd-label-floating", @style = "float:left" })
+            @Html.EditorFor(model => model.DcNhanHang, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr style="background-color:aqua; text-align:center;color:black;">
+                <th colspan="7" style="text-align: center;font-size: 30px;">Danh sách mặt hàng</th>
+            </tr>
+            <tr>
+                <th>Mã sản phẩm</th>
+                <th>Ảnh</th>
+                <th>Tên sản phẩm</th>
+
+                <th>Giá bán</th>
+                <th>Giá khuyến mãi</th>
+
+                <th>Số lượng mua</th>
+                <th>Thành tiền</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @{decimal sumOfTotal = 0;
+                int sumTotal = 0;}
+            @foreach (var item in Model.sanPhams)
+            {
+
+                <tr>
+                    <td>@item.MaSP</td>
+                    @{
+                        //Lấy  đường  dẫn  file  ảnh
+                        string ImagePath = "~/wwwroot/Content/images/" + item.Anh;
+                    }
+
+                    <td><img src="@Url.Content(ImagePath)" width="100" height="100" class="img-thumbnail" /></td>
+                    <td>@item.TenSP</td>
+                    <td>@Convert.ToInt32(item.Gia).ToString("C0", CultureInfo.CurrentCulture).Substring(1)</td>
+                    <td>@Convert.ToInt32(item.GiaKM).ToString("C0", CultureInfo.CurrentCulture).Substring(1)</td>
+                    <td>@item.SoLuong</td>
+                    @{ decimal total = 0;
+                        if (item.GiaKM == 0)
+                        {
+                            total = item.Gia * item.SoLuong;
+                            sumOfTotal += total;
+
+                        }
+                        else
+                        {
+                            total = item.GiaKM * item.SoLuong;
+
+                            sumOfTotal += total;
+                        }
+
+                    }
+                    <td>@Convert.ToInt32(total).ToString("C0", CultureInfo.CurrentCulture).Substring(1)</td>
+
+                </tr>
+            }
+
+
+            @{
+                string sum = "";
+                if (Model.sanPhams.Count > 0)
+                {
+                    sumTotal = Convert.ToInt32((sumOfTotal + Model.PhiShip));
+                    sum = sumTotal.ToString("C0", CultureInfo.CurrentCulture).Substring(1);
+                    <tr style="text-align: center;background-color:aqua;"><td colspan="7"><b style="color:black; ">TỔNG : @sum</b></td></tr>
+
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-sm btn-primary normal-text" })
+    </div>
+
+</div>

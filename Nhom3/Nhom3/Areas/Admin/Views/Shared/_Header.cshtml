@@ -1,0 +1,40 @@
+﻿
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header" style="display:flex;justify-content: space-between">
+        <a class="navbar-brand" href="index.html">
+            <img src="https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png" alt="" width="20px" height="20px">
+
+        </a>
+        <a class="navbar-brand" href="#" style="justify-content: center;color: black;">Nguyễn Văn A</a>
+        <a class="navbar-brand" href="index.html" style="display:flex;justify-content: flex-end;color: black; margin-left:1000px"><i class="fa fa-power-off"></i> Logout</a>
+    </div>
+
+
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-item">
+                    <a href="@Url.Action("Index","Home","")" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")">
+                    <i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="@Url.Action("Index","Category","")" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Category" ? "active" : "")"><i class="fa fa-tasks"></i>Quản lý danh mục</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="@Url.Action("Index","Product","")" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Product" ? "active" : "")"><i class="fa fa-edit"></i>Quản lý sản phẩm</a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Index","Order","")" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Order" ? "active" : "")"><i class="fa fa-info-circle"></i>Thông tin đơn hàng</a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Index","Account","")" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Account" ? "active" : "")"><i class="fa fa-users"></i>Quản lý tài khoản</a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+
+</nav>

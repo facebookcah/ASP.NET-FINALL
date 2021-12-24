@@ -1,0 +1,40 @@
+﻿<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <!-- Custom Fonts -->
+
+    <link href="~/wwwroot/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/wwwroot/Content/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/wwwroot/Content/css/sb-admin-2.css" rel="stylesheet" />
+  
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        @Html.Partial("_Header")
+
+        <!-- Page Content -->
+        <div id="page-wrapper" style="padding: 20px;text-align: center;">
+            @RenderBody()
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="~/wwwroot/Content/js/sb-admin-2.js"></script>
+    <script src="~/wwwroot/Content/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/Content/js/jquery.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+﻿@model Nhom3.Core.Domains.SanPham
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <title>Chi tiết sản phẩm</title>
+</head>
+<div class="col-sm-9 padding-right">
+    <div class="product-details">
+        <!--product-details-->
+        <div class="col-sm-5">
+            <div class="view-product">
+                <img src="@Url.Content("~/wwwroot/Content/images/"+Model.Anh)"
+                     alt=""
+                     style="width: 333px; height: 395px" />
+            </div>
+            <div id="similar-product"
+                 class="carousel slide"
+                 data-ride="carousel">
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-7">
+            <div class="product-information">
+                <!--/product-information-->
+                <img src="images/Content/product-details/new.jpg"
+                     class="newarrival"
+                     alt="" />
+                <h2>@Html.DisplayFor(model => model.TenSP)</h2>
+                <p> @Html.DisplayFor(model => model.Gia) VND</p>
+                <img src="@Url.Content("~/wwwroot/Cotent/images/"+Model.Anh)" alt="" />
+
+                <strong>Mô tả sản phẩm</strong>
+                <p>
+                    Hoa chính: @Html.DisplayFor(model => model.HoaChinh)
+                </p>
+                <p>Hoa phụ: @Html.DisplayFor(model => model.HoaPhu)</p>
+                <button type="button" class="btn btn-fefault cart" style="margin-left:0px">
+                    <i class="fa fa-shopping-cart"></i>
+                    Thêm vào giỏ hàng
+                </button>
+                <br />
+                <strong>Mô tả chi tiết: </strong>
+                <p>
+                    @Html.DisplayFor(model => model.MoTa)
+                </p>
+            </div>
+            <!--/product-information-->
+        </div>
+    </div>
+</div>
+

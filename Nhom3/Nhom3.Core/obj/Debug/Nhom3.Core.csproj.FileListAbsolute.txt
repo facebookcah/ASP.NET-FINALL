@@ -1,0 +1,14 @@
+D:\Nhom3\Nhom3.Core\bin\Debug\Nhom3.Core.dll.config
+D:\Nhom3\Nhom3.Core\bin\Debug\Nhom3.Core.dll
+D:\Nhom3\Nhom3.Core\bin\Debug\Nhom3.Core.pdb
+D:\Nhom3\Nhom3.Core\bin\Debug\EntityFramework.dll
+D:\Nhom3\Nhom3.Core\bin\Debug\EntityFramework.SqlServer.dll
+D:\Nhom3\Nhom3.Core\bin\Debug\EntityFramework.xml
+D:\Nhom3\Nhom3.Core\bin\Debug\EntityFramework.SqlServer.xml
+D:\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.csprojAssemblyReference.cache
+D:\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.csproj.CoreCompileInputs.cache
+D:\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.csproj.CopyComplete
+D:\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.dll
+D:\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.pdb
+D:\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.Migrations.add_constraint1.resources
+D:\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.csproj.GenerateResource.cache

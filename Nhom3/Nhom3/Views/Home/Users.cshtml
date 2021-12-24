@@ -1,0 +1,58 @@
+﻿@model Nhom3.Core.Domains.TaiKhoan
+@{
+    ViewBag.Title = "User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <title>Thông tin tài khoản</title>
+</head>
+<div class="signup-form col-sm-5 col-sm-offset-1" style="min-height: 700px">
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <div>Tên đăng nhập</div>
+                @Html.EditorFor(model => model.TenTaiKhoan, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.TenTaiKhoan, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <div>Tên khách hàng</div>
+                @Html.EditorFor(model => model.TenKhachHang, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                @Html.ValidationMessageFor(model => model.TenKhachHang, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <div>Email</div>
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <div>Số điện thoại</div>
+                @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <div>Địa chỉ</div>
+                @Html.TextAreaFor(model => model.DiaChi, new { @class = "md-textarea form-control", @rows = 2 })
+                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(model => model.MatKhau)
+    @Html.HiddenFor(model => model.TinhTrang)
+    @Html.HiddenFor(model => model.Quyen)
+
+
+</div>
+

@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <title>Thanh Toán</title>
+</head>
+
+<section id="cart_items">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                <li class="active">Check out</li>
+            </ol>
+        </div><!--/breadcrums-->
+
+
+
+        <div class="shopper-informations">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="shopper-info">
+                        <p>Thông tin người mua hàng</p>
+                        <form>
+                            <input type="text" placeholder="Tên hiển thị">
+                            <input type="text" placeholder="Tên tài khoản">
+
+                        </form>
+
+
+                    </div>
+                </div>
+                <div class="col-sm-5 clearfix">
+                    <div class="bill-to">
+                        <p>Thông tin hóa đơn</p>
+                        <div class="form-one">
+                            <form>
+                                <input type="text" placeholder="Email*">
+                                <input type="text" placeholder="Tiêu đề">
+                                <input type="text" placeholder="Họ tên *">
+                                <input type="text" placeholder="Địa chỉ *">
+                            </form>
+                        </div>
+                        <div class="form-two">
+                            <form>
+                                <input type="password" placeholder="Xác nhận mật khẩu *">
+                                <input type="text" placeholder="Số điện thoại *">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="order-message">
+                        <p>Lời nhắn</p>
+                        <textarea name="message" placeholder="Ghi chú về đơn đặt hàng của bạn, Ghi chú đặc biệt khi giao hàng" rows="16"></textarea>
+                        <label><input type="checkbox"> Nhận hóa đơn</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="review-payment">
+            <h2>Thông tin mua hàng</h2>
+        </div>
+
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Sản phẩm</td>
+                        <td class="description">Mô tả</td>
+                        <td class="price">Giá</td>
+                        <td class="quantity">Số lượng</td>
+                        <td class="total">Tổng</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="cart_product">
+                            <a href=""><img src="~/wwwroot/Content/images/HoaCaoCap_loi_tu_tinh.png" alt="" style="width: 110px ; height: 110px ;"></a>
+                        </td>
+                        <td class="cart_description">
+                            <h4><a href="@Url.Action("Details","Home")">Lời tự tình</a></h4>
+                        </td>
+                        <td class="cart_price">
+                            <p>600000 VND</p>
+                        </td>
+                        <td class="cart_quantity">
+                            <div class="cart_quantity_button">
+                                <a class="cart_quantity_up" href=""> + </a>
+                                <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
+                                <a class="cart_quantity_down" href=""> - </a>
+                            </div>
+                        </td>
+                        <td class="cart_total">
+                            <p class="cart_total_price">600000</p>
+                        </td>
+                        <td class="cart_delete">
+                            <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">&nbsp;</td>
+                        <td colspan="2">
+                            <table class="table table-condensed total-result">
+                                <tr>
+                                    <td>Tiền hoa</td>
+                                    <td>$59</td>
+                                </tr>
+                                <tr>
+                                    <td>Thuế</td>
+                                    <td>$2</td>
+                                </tr>
+                                <tr class="shipping-cost">
+                                    <td>Phí vận chuyển</td>
+                                    <td>Free</td>
+                                </tr>
+                                <tr>
+                                    <td>Tổng tiền</td>
+                                    <td><span>$61</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-default update" href="">Thanh toán</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="payment-options">
+            <p>Hình thức thanh toán</p>
+            <br>
+            <span>
+                <label><input type="checkbox"> Thanh toán khi nhận thẻ</label>
+            </span>
+
+            <span>
+                <label><input type="checkbox"> Paypal</label>
+            </span>
+        </div>
+    </div>
+</section> <!--/#cart_items-->

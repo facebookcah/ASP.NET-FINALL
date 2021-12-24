@@ -1,0 +1,102 @@
+﻿@model Nhom3.Core.Domains.TaiKhoan
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <title>Chỉnh sửa thông tin</title>
+</head>
+<div class="signup-form col-sm-5 col-sm-offset-1" style="min-height: 700px">
+    <h3>Sửa thông tin cá nhân</h3>
+
+    @using (Html.BeginForm("EditUser", "Home", FormMethod.Post, new { @class = "signin-form" }))
+    {
+
+        @Html.AntiForgeryToken()
+        <form>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div>Tên đăng nhập</div>
+                        @Html.EditorFor(model => model.TenTaiKhoan, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.TenTaiKhoan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div>Tên khách hàng</div>
+                        @Html.EditorFor(model => model.TenKhachHang, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                        @Html.ValidationMessageFor(model => model.TenKhachHang, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div>Email</div>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div>Số điện thoại</div>
+                        @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                        @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div>Địa chỉ</div>
+                        @Html.TextAreaFor(model => model.DiaChi, new { @class = "md-textarea form-control", @rows = 2 })
+                        @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div>Nhập mật khẩu xác nhận</div>
+                        <input type="password" name="PassValidate" class="form-control form-control-sm" />
+                    </div>
+                </div>
+            </div>
+
+            @Html.HiddenFor(model => model.MatKhau)
+            @Html.HiddenFor(model => model.TinhTrang)
+            @Html.HiddenFor(model => model.Quyen)
+
+            <div class="form-group row">
+                <div style="display:flex; justify-content:space-between">
+                    <input type="submit" value="Lưu" class="btn btn-primary" style="width:70px;height:35px; margin-top:0; border-radius:4px" />
+                    <div style="width: 70px">
+                        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-warning" })
+                    </div>
+
+
+                </div>
+            </div>
+        </form>}
+
+
+</div>
+
+
+@if (ViewBag.Message2 != null)
+{
+    <script>
+        alert('Cập nhật thông tin tài khoản thất bại!');
+    </script>
+    ViewBag.Message2 = null;
+}
+@if (ViewBag.Message3 != null)
+{
+    <script>
+        alert('Mật khẩu xác nhận không chính xác!');
+    </script>
+    ViewBag.Message3 = null;
+}
+

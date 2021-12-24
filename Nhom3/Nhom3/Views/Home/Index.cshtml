@@ -1,0 +1,110 @@
+﻿@model PagedList.IPagedList<Nhom3.Core.Domains.SanPham>
+@using PagedList.Mvc;
+@using System.Globalization;
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <title>Trang chủ</title>
+</head>
+
+<section id="slider">
+    <!--slider-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#slider-carousel" data-slide-to="1"></li>
+                        <li data-target="#slider-carousel" data-slide-to="2"></li>
+                    </ol>
+
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <div>
+                                <img src="~/wwwroot/Content/images/slide1_1.jpg" class="girl img-responsive" alt="Slide Img" />
+
+                            </div>
+                        </div>
+                        <div class="item">
+
+                            <div>
+                                <img src="~/wwwroot/Content/images/slide2.jpg" class="girl img-responsive" alt="Slide Img" />
+
+                            </div>
+                        </div>
+
+                        <div class="item">
+
+                            <div>
+                                <img src="~/wwwroot/Content/images/sidle3.jpg" class="girl img-responsive" alt="Slide Img" />
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section><!--/slider-->
+<section>
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-12 padding-right">
+                <div class="features_items">
+                    <!--features_items-->
+                        <h2 class="title text-center" style="color:magenta;">Sản phẩm</h2>
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-sm-3">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        @{
+                                            //Lấy đường dẫn file ảnh
+                                            string ImagePath = "~/wwwroot/Content/images/" + item.Anh;
+                                        }
+                                        <img src="@Url.Content(ImagePath)" alt="" style="width: 300px; height: 260px;margin-bottom:15px;" />
+
+                                        <a style="text-decoration:none; color:black;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:17px; color:dimgray;" href="@Url.Action("Details", "Home", new { id = item.MaSP })">
+                                            @item.TenSP
+                                        </a>
+                                        <br />
+                                        @{
+                                            var price = Convert.ToInt32(item.Gia).ToString("C0", CultureInfo.CurrentUICulture).Substring(1) + " VNĐ";
+
+                                        }
+                                        <b style="color:magenta;font-size:20px; ">@price</b>
+                                        <br>
+                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div><!--features_items-->
+                <div class="paging_news">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new
+                    {
+                        page,
+                      madm = Request.QueryString["madm"],
+                    }))
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

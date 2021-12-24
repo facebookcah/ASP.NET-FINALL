@@ -1,0 +1,81 @@
+﻿@model Nhom3.Core.Domains.TaiKhoan
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .container {
+        /*position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);*/
+    }
+
+    .signin-form {
+        margin-top: 50px;
+    }
+
+        .signin-form .form-group {
+            margin-bottom: 35px !important;
+        }
+
+    body .signin-form .form-group label {
+        text-transform: none !important;
+        font-size: 16px !important;
+        color: gray !important;
+    }
+
+    body {
+        font-family: Arial !important;
+    }
+
+    .field-validation-error span {
+        color: red;
+    }
+</style>
+<head>
+    <title>Đăng nhập</title>
+</head>
+<div style="min-height:700px">
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "signin-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-sm-3 col-sm-offset-1">
+
+                <label class="form-control-placeholder" for="username">Tên đăng nhập</label>
+                @Html.EditorFor(model => model.TenTaiKhoan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenTaiKhoan, "", new { @class = "text-danger" })
+                @if (ViewBag.ErrorTenTaiKhoan != null)
+                {
+                    <p class="text-danger">@ViewBag.ErrorTenTaiKhoan</p>}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 col-sm-offset-1">
+                <label class="form-control-placeholder" for="password">Mật khẩu</label>
+                @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control" } })
+
+                @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                @if (ViewBag.ErrorMatKhau != null)
+                {
+                    <p class="text-danger">@ViewBag.ErrorMatKhau</p>
+                }
+            </div>
+        </div>
+        <br />
+        <div class="form-group row ">
+            @if (ViewBag.error != null)
+            {
+                <p class="text-danger" style="margin-left: 10px">@ViewBag.error</p>}
+            <button style="font-family: 14px; width:200px; margin-left:115px" class="col-sm-3 col-sm-offset-1 btn btn-primary submit" type="submit">ĐĂNG NHẬP</button>
+        </div>
+    }
+    <p class="text-center">
+        Bạn chưa có tài khoản hãy kích vào
+        <a href="@Url.Action("Signin","Home")">Đăng ký</a>
+    </p>
+
+</div>
+

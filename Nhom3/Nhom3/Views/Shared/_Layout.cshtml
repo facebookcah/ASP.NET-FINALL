@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @{
+        Html.RenderPartial("_Header");
+    }
+</head><!--/head-->
+
+<body>
+    <header>
+        @{
+            Html.RenderAction("_Nav", "Home");
+        }
+    </header><!--/header-->
+
+
+    <section>
+        <div class="container" style="min-height:700px">
+            @RenderBody();
+        </div>
+    </section>
+
+    @{
+        Html.RenderPartial("_Footer");
+    }
+    <script src="~/wwwroot/Content/js/gmaps.js"></script>
+    <script src="~/wwwroot/Content/js/contact.js"></script>
+    <script src="~/wwwroot/Content/js/bootstrap1.min.js"></script>
+    <script src="~/wwwroot/Content/js/html5shiv.js"></script>
+    <script src="~/wwwroot/Content/js/jquery.js"></script>
+    <script src="~/wwwroot/Content/js/jquery.prettyPhoto.js"></script>
+    <script src="~/wwwroot/Content/js/jquery.scrollUp.min.js"></script>
+    <script src="~/wwwroot/Content/js/main.js"></script>
+    <script src="~/wwwroot/Content/js/price-range.js"></script>
+    <script src="~/wwwroot/Content/js/bootstrap.min.js"></script>
+</body>
+</html>
