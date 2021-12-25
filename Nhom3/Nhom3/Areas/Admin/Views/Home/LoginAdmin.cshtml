@@ -1,0 +1,136 @@
+﻿@model Nhom3.Core.Domains.TaiKhoan
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<!--author:starttemplate-->
+<!--reference site : starttemplate.com-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords"
+          content="unique login form,leamug login form,boostrap login form,responsive login form,free css html login form,download login form">
+    <meta name="author" content="leamug">
+    <title>Login Admin</title>
+    <link href="css/style.css" rel="stylesheet" id="style">
+    <!-- Bootstrap core Library -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+    <!-- Font Awesome-->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<style>
+    body {
+        background-image: url('https://images.unsplash.com/photo-1618813690183-c8a0e5de80f0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTl8fGZsb3dlciUyMGZpZWxkfGVufDB8fDB8fA%3D%3D&w=1000&q=80');
+        background-position: center;
+        background-size: cover;
+        -webkit-font-smoothing: antialiased;
+        font: normal 14px Roboto,arial,sans-serif;
+        font-family: 'Dancing Script', cursive !important;
+    }
+
+    .container {
+        padding: 110px;
+    }
+
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #ffffff !important;
+        opacity: 1; /* Firefox */
+        font-size: 18px !important;
+    }
+
+    .form-login {
+        background-color: rgba(0,0,0,0.55);
+        padding-top: 10px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 15px;
+        border-color: #d2d2d2;
+        border-width: 5px;
+        color: white;
+        box-shadow: 0 1px 0 #cfcfcf;
+    }
+
+    .form-control {
+        background: transparent !important;
+        color: white !important;
+        font-size: 18px !important;
+    }
+
+    h1 {
+        color: white !important;
+    }
+
+    h4 {
+        border: 0 solid #fff;
+        border-bottom-width: 1px;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+
+    .form-control {
+        border-radius: 10px;
+    }
+
+    .text-white {
+        color: white !important;
+    }
+
+    .wrapper {
+        text-align: center;
+    }
+
+    .footer p {
+        font-size: 18px;
+    }
+</style>
+<body>
+    @if (ViewBag.Error != null)
+    { 
+        <span style="color:red; font-size:20px; text-align:center;"><i class="icon-bar alert"></i>@ViewBag.Error</span>
+    }
+
+    <!-- Page Content -->
+    <div class="container" style="justify-content:center;">
+
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6 text-center">
+                <h1 class='text-white'>Trang quản trị</h1>
+                <div class="form-login">
+                    </br>
+                    <h4>Đăng nhập</h4>
+                    </br>
+                    @using (Html.BeginForm("LoginAdmin","Home",FormMethod.Post))
+                    {
+                        <input type="text" id="userName" name="TenTaiKhoan" class="form-control input-sm chat-input" placeholder="Tên đăng nhập" style="margin-bottom:20px; padding:10px;"/>
+                         @Html.ValidationMessageFor(model => model.TenTaiKhoan, "", new { @class = "text-danger", @style = "font-size:20px;" })
+                        <input type="password" id="userPassword" name="MatKhau" class="form-control input-sm chat-input" placeholder="Mật khẩu" style="margin-bottom:20px;padding:10px;"/>
+                         @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger",@style="font-size:20px;" })
+
+                    <div class="wrapper" style="margin-top:20px;">
+                        <span class="group-btn">
+                            <input class="btn btn-danger btn-md" type="submit" value="Đăng nhập">
+                        </span>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        </br></br></br>
+        <!--footer-->
+        <div class="footer text-white text-center" style="text-align:center;">
+            <p>© 2021 sản phẩm của nhóm 3 ASP.NET</p>
+        </div>
+        <!--//footer-->
+    </div>
+
+    }
+</body>
+</html>

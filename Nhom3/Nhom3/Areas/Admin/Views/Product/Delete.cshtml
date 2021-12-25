@@ -26,7 +26,7 @@
 @using (Html.BeginForm("DeleteConfirmed", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <div>
+    <div class="form-horizontal container-fluid" >
 
         <div class="row col-md-4 " style="margin-top:7%; ">
             <div class="form-group">

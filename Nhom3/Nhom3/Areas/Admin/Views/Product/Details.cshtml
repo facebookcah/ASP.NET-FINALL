@@ -16,113 +16,113 @@
 {
     @Html.AntiForgeryToken()
 
+    <div class="form-horizontal container-fluid">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <input value="@Model.Anh" hidden name="Anh" />
+        <input value="@Model.MaSP" hidden name="MaSP" />
+        <div class="row col-md-4" style="margin-top:7%;">
+            <div class="form-group">
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <input value="@Model.Anh" hidden name="Anh" />
-    <input value="@Model.MaSP" hidden name="MaSP" />
-    <div class="row col-md-4" style="margin-top:7%;">
-        <div class="form-group">
-
-            <img id="output" class="img-rounded" alt="Ảnh" width="300" height="300" src="~/wwwroot/Content/images/@Model.Anh" />
-        </div>
-    </div>
-
-    <div class="row col-md-8" style="margin-top:5%;">
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.TenSP, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-            @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control",@disabled="disabled" } })
-            @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
-
+                <img id="output" class="img-rounded" alt="Ảnh" width="300" height="300" src="~/wwwroot/Content/images/@Model.Anh" />
+            </div>
         </div>
 
-        <div class="form-group">
+        <div class="row col-md-8" style="margin-top:5%;">
+            <div class="form-group">
 
-            @Html.LabelFor(model => model.HoaChinh, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+                @Html.LabelFor(model => model.TenSP, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+                @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
 
-            @Html.EditorFor(model => model.HoaChinh, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => model.HoaChinh, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.HoaChinh, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+
+                @Html.EditorFor(model => model.HoaChinh, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.HoaChinh, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.HoaPhu, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+
+                @Html.EditorFor(model => model.HoaPhu, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.HoaPhu, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.ChieuNgang, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+
+                @Html.EditorFor(model => model.ChieuNgang, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.ChieuNgang, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.ChieuCao, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+
+                @Html.EditorFor(model => model.ChieuCao, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.ChieuCao, "", new { @class = "text-danger" })
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.Gia, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+
+                @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.GiaKM, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+
+                @Html.EditorFor(model => model.GiaKM, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.GiaKM, "", new { @class = "text-danger" })
+
+            </div>
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MaDM, "Tên danh mục", htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+                @Html.EditorFor(model => model.DanhMuc.TenDM, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.MoTa, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+                <textarea id="mota" name="MoTa" rows="4" cols="50" class="form-control" disabled>@Model.MoTa</textarea>
+                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+            </div>
 
         </div>
 
-        <div class="form-group">
 
-            @Html.LabelFor(model => model.HoaPhu, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
 
-            @Html.EditorFor(model => model.HoaPhu, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => model.HoaPhu, "", new { @class = "text-danger" })
 
-        </div>
+        <div class="form-group col-md-12" style="margin-left:83%;">
+            <div class="col-md-2">
 
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.ChieuNgang, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-
-            @Html.EditorFor(model => model.ChieuNgang, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => model.ChieuNgang, "", new { @class = "text-danger" })
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-sm btn-primary normal-text" })
+            </div>
 
         </div>
 
-        <div class="form-group">
+</div>
 
-            @Html.LabelFor(model => model.ChieuCao, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-
-            @Html.EditorFor(model => model.ChieuCao, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => model.ChieuCao, "", new { @class = "text-danger" })
-
-        </div>
-
-
-
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.Gia, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-
-            @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.GiaKM, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-
-            @Html.EditorFor(model => model.GiaKM, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => model.GiaKM, "", new { @class = "text-danger" })
-
-        </div>
-
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaDM, "Tên danh mục", htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-            @Html.EditorFor(model => model.DanhMuc.TenDM, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-        </div>
-
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.MoTa, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-            <textarea id="mota" name="MoTa" rows="4" cols="50" class="form-control" disabled>@Model.MoTa</textarea>
-            @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
-        </div>
-
-    </div>
-
-
-
-
-    <div class="form-group col-md-12" style="margin-left:83%;">
-        <div class="col-md-2">
-       
-            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-sm btn-primary normal-text" })
-        </div>
-
-    </div>
-
-   
-
-}
+        }
 
 
 

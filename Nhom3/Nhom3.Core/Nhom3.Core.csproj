@@ -67,6 +67,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\OrderDetails.cs" />
     <Compile Include="ViewModels\OrderProduct.cs" />
+    <Compile Include="ViewModels\ProductInCart.cs" />
+    <Compile Include="ViewModels\Register.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

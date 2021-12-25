@@ -133,12 +133,21 @@ namespace Nhom3.Areas.Admin.Controllers
                 var countProductInCart = db.ChiTietGioHangs.Where(i=>i.MaGioHang==cartCode).ToList();
                 if (countProductInCart.Count == 0)
                 {
-                    var hoadon = db.HoaDons.ToList().Find(i => i.MaGioHang == cartCode);
-                    db.HoaDons.Remove(hoadon);
+                    var hoadons = db.HoaDons.ToList().Where(i => i.MaGioHang == cartCode).ToList();
+                    if (hoadons != null)
+                    {
+                        foreach (var item in hoadons)
+                        {
+                            db.HoaDons.Remove(item);
+                        }
+                    }
+                    if(cartOfAccount!=null)
                     db.GioHangs.Remove(cartOfAccount);
+                    if(taiKhoan!=null)
                     db.TaiKhoans.Remove(taiKhoan);
                    
                     db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
                 else
                 {

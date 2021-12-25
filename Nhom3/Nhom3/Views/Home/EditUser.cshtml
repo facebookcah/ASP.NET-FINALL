@@ -7,12 +7,13 @@
     <title>Chỉnh sửa thông tin</title>
 </head>
 <div class="signup-form col-sm-5 col-sm-offset-1" style="min-height: 700px">
+
     <h3>Sửa thông tin cá nhân</h3>
 
     @using (Html.BeginForm("EditUser", "Home", FormMethod.Post, new { @class = "signin-form" }))
     {
 
-        @Html.AntiForgeryToken()
+
         <form>
             <div class="row">
                 <div class="col">
@@ -60,7 +61,7 @@
                 <div class="col">
                     <div class="form-group">
                         <div>Nhập mật khẩu xác nhận</div>
-                        <input type="password" name="PassValidate" class="form-control form-control-sm" />
+                        <input type="password" name="pass" class="form-control form-control-sm" />
                     </div>
                 </div>
             </div>
@@ -79,24 +80,16 @@
 
                 </div>
             </div>
-        </form>}
+        </form>
 
+    }
+    @if (ViewBag.mess != null)
+    {
+        <span class="alert alert-danger col-md-12" style="text-align:center; width:100%;">@ViewBag.mess</span>
+    }
 
 </div>
 
 
-@if (ViewBag.Message2 != null)
-{
-    <script>
-        alert('Cập nhật thông tin tài khoản thất bại!');
-    </script>
-    ViewBag.Message2 = null;
-}
-@if (ViewBag.Message3 != null)
-{
-    <script>
-        alert('Mật khẩu xác nhận không chính xác!');
-    </script>
-    ViewBag.Message3 = null;
-}
+
 

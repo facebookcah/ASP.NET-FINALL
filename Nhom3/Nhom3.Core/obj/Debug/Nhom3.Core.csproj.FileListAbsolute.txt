@@ -12,3 +12,17 @@ D:\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.dll
 D:\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.pdb
 D:\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.Migrations.add_constraint1.resources
 D:\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.csproj.GenerateResource.cache
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\bin\Debug\Nhom3.Core.dll.config
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\bin\Debug\Nhom3.Core.dll
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\bin\Debug\Nhom3.Core.pdb
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\bin\Debug\EntityFramework.dll
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\bin\Debug\EntityFramework.xml
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.Migrations.add_constraint1.resources
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.csproj.GenerateResource.cache
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.csproj.CoreCompileInputs.cache
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.csproj.CopyComplete
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.dll
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.pdb
+C:\Users\84835\Desktop\ASP.NET-FINALL\Nhom3\Nhom3.Core\obj\Debug\Nhom3.Core.csprojAssemblyReference.cache

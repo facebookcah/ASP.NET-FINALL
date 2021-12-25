@@ -1,7 +1,7 @@
 ﻿@model Nhom3.Core.Domains.SanPham
 
 @{
-   
+
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     var dropList = ViewBag.drop as Dictionary<int, string>;
 }
@@ -16,128 +16,129 @@
 {
     @Html.AntiForgeryToken()
 
+    <div class="form-horizontal container-fluid">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <input value="@Model.Anh" hidden name="Anh" />
+        <input value="@Model.MaSP" hidden name="MaSP" />
+        <div class="row col-md-4" style="margin-top:7%;">
+            <div class="form-group">
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <input value="@Model.Anh" hidden name="Anh" />
-    <input value="@Model.MaSP" hidden name="MaSP" />
-    <div class="row col-md-4" style="margin-top:7%;">
-        <div class="form-group">
-
-            <img id="output" class="img-rounded" alt="Ảnh" width="300" height="300" src="~/wwwroot/Content/images/@Model.Anh" />
-            <p><label for="ufile" style="cursor: pointer">Chọn file ảnh</label></p>
-            <input name="ImageFile" id="ufile" type="file" style="display: none" onchange="loadFile(event)" />
-        </div>
-    </div>
-
-    <div class="row col-md-8" style="margin-top:5%;">
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.TenSP, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-            @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
-
+                <img id="output" class="img-rounded" alt="Ảnh" width="300" height="300" src="~/wwwroot/Content/images/@Model.Anh" />
+                <p><label for="ufile" style="cursor: pointer">Chọn file ảnh</label></p>
+                <input name="ImageFile" id="ufile" type="file" style="display: none" onchange="loadFile(event)" />
+            </div>
         </div>
 
-        <div class="form-group">
+        <div class="row col-md-8" style="margin-top:5%;">
+            <div class="form-group">
 
-            @Html.LabelFor(model => model.HoaChinh, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+                @Html.LabelFor(model => model.TenSP, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+                @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
 
-            @Html.EditorFor(model => model.HoaChinh, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.HoaChinh, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.HoaChinh, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+
+                @Html.EditorFor(model => model.HoaChinh, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HoaChinh, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.HoaPhu, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+
+                @Html.EditorFor(model => model.HoaPhu, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HoaPhu, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.ChieuNgang, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+
+                @Html.EditorFor(model => model.ChieuNgang, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ChieuNgang, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.ChieuCao, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+
+                @Html.EditorFor(model => model.ChieuCao, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ChieuCao, "", new { @class = "text-danger" })
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.Gia, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+
+                @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.GiaKM, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+
+                @Html.EditorFor(model => model.GiaKM, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GiaKM, "", new { @class = "text-danger" })
+
+            </div>
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MaDM, "Tên danh mục", htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+                <select class="form-control" name="MaDM">
+                    @foreach (var item in dropList)
+                    {
+                        <option value="@item.Key">@item.Value</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.MoTa, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
+                <textarea id="mota" name="MoTa" rows="4" cols="50" class="form-control">@Model.MoTa</textarea>
+                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+            </div>
 
         </div>
 
-        <div class="form-group">
 
-            @Html.LabelFor(model => model.HoaPhu, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
 
-            @Html.EditorFor(model => model.HoaPhu, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.HoaPhu, "", new { @class = "text-danger" })
 
-        </div>
-
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.ChieuNgang, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-
-            @Html.EditorFor(model => model.ChieuNgang, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ChieuNgang, "", new { @class = "text-danger" })
+        <div class="form-group col-md-12" style="margin-left:80%;">
+            <div class="col-md-2">
+                <input type="submit" value="Lưu" class="btn btn-sm btn-primary normal-text" />
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-sm btn-primary normal-text" })
+            </div>
 
         </div>
-
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.ChieuCao, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-
-            @Html.EditorFor(model => model.ChieuCao, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ChieuCao, "", new { @class = "text-danger" })
-
         </div>
 
-      
+        <script>
+            var loadFile = function (event) {
+                var image = document.getElementById('output'); image.src = URL.createObjectURL(event.target.files[0]);
+            };
+        </script>
 
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.Gia, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-
-            @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.GiaKM, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-
-            @Html.EditorFor(model => model.GiaKM, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.GiaKM, "", new { @class = "text-danger" })
-
-        </div>
-
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaDM, "Tên danh mục", htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-            <select class="form-control" name="MaDM">
-                @foreach (var item in dropList)
-                {
-                    <option value="@item.Key">@item.Value</option>
-                }
-            </select>
-        </div>
-
-        <div class="form-group">
-
-            @Html.LabelFor(model => model.MoTa, htmlAttributes: new { @class = "control-label ", @style = "float:left;" })
-            <textarea id="mota" name="MoTa" rows="4" cols="50" class="form-control" >@Model.MoTa</textarea>
-            @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
-        </div>
-
-    </div>
-
-
-
-
-    <div class="form-group col-md-12" style="margin-left:80%;">
-        <div class="col-md-2">
-            <input type="submit" value="Lưu" class="btn btn-sm btn-primary normal-text" />
-            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-sm btn-primary normal-text" })
-        </div>
-
-    </div>
-
-    <script>
-        var loadFile = function (event) {
-            var image = document.getElementById('output'); image.src = URL.createObjectURL(event.target.files[0]);
-        };
-    </script>
-
-}
-@if (ViewBag.Error != null)
-{
-    <br />
-    <div class="alert alert-danger">@ViewBag.Error</div>
-}
+        }
+        @if (ViewBag.Error != null)
+        {
+            <br />
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
 
 

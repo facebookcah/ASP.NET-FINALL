@@ -34,7 +34,7 @@
         [StringLength(100, ErrorMessage = "Tên khách hàng không vượt quá 100 kí tự!")]
         public string TenKhachHang { get; set; }
         [Display(Name = "Email")]
-        [Required(ErrorMessage = "Email không được để trống!")]
+       
         [EmailAddress(ErrorMessage = "Email không đúng định dạng!")]
         public string Email { get; set; }
         [Display(Name = "Số điện thoại")]

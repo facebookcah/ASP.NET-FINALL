@@ -98,8 +98,8 @@
                 @Html.LabelFor(model => model.Quyen, htmlAttributes: new { @class = "control-label", @style = "float:left;" })
 
                 <select class="form-control" name="Quyen">
-                    <option value="1">Quản trị viên</option>
-                    <option value="2">Khách hàng</option>
+                    <option value="0">Quản trị viên</option>
+                    <option value="1">Khách hàng</option>
                 </select>
                 @Html.ValidationMessageFor(model => model.Quyen, "", new { @class = "text-danger" })
             </div>

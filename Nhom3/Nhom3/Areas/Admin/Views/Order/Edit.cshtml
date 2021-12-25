@@ -6,6 +6,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     IDictionary<string, string> drop = new Dictionary<string, string>();
     drop.Add("Đang giao", "Đang giao");
+    drop.Add("Chờ xác nhận", "Chờ xác nhận");
     drop.Add("Đã nhận hàng", "Đã nhận hàng");
     drop.Add("Đã hủy", "Đã hủy");
 }
@@ -70,7 +71,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.DcNhanHang, htmlAttributes: new { @class = "bmd-label-floating", @style = "float:left" })
                 @Html.EditorFor(model => model.DcNhanHang, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })

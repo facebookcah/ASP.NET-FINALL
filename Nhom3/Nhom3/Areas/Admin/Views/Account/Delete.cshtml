@@ -34,13 +34,13 @@
         <div class="col-md-12">
             <div class="form-group">
                 @Html.LabelFor(model => model.Quyen, htmlAttributes: new { @class = "bmd-label-floating", @style = "float:left;" })
+                @if (Model.Quyen == 0)
+                {
+                    <input type="text" value="Quản trị viên" name="Quyen" disabled class="form-control" />
+                }
                 @if (Model.Quyen == 1)
                 {
-                    <input type="text" value="Quản trị viên" name="TinhTrang" disabled class="form-control" />
-                }
-                @if (Model.Quyen == 2)
-                {
-                    <input type="text" value="Khách hàng" name="TinhTrang" disabled class="form-control" />
+                    <input type="text" value="Khách hàng" name="Quyen" disabled class="form-control" />
                 }
             </div>
         </div>

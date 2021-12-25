@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using PagedList;
 using Nhom3.Core.Domains;
+using Nhom3.Core.ViewModels;
 
 namespace Nhom3.Controllers
 {
@@ -40,14 +41,81 @@ namespace Nhom3.Controllers
             return View(product.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult AddToCart(int? productCode)
+        {
+            //kiểm tra đăng nhập
+            if (Session["TenTaiKhoan"] == null)
+            {
+                List<ProductInCart> fakeData = new List<ProductInCart>();
+                ViewBag.Message = "Vui lòng đăng nhập để tiếp tục mua sắm !!";
+                return View("Cart",fakeData);
+            }
+            //pass case đăng nhập thì tìm giỏ hàng của tài khoản
+            var code = Session["TenTaiKhoan"] as string;
+            var carts = db.GioHangs.ToList();
+            //kiểm tra tài khoản đã có giỏ hàng chưa
+            var cartOfAccount = carts.Where(i => i.TenTaiKhoan.ToLower().Equals(code.ToLower())).FirstOrDefault();
+            //nếu chưa thì tạo giỏ hàng mới cho tài khoản
+            if (cartOfAccount == null)
+            {
+                GioHang cart = new GioHang();
+                cart.TenTaiKhoan = Session["TenTaiKhoan"] as string;
+                db.GioHangs.Add(cart);
+                db.SaveChanges();
+            }
+            // get product selected
+            var product = db.SanPhams.Find(productCode);
+            //check exist in chitietgiohang
+            var productInOrderDetail = db.ChiTietGioHangs.ToList().Where(i => i.MaGioHang == cartOfAccount.MaGioHang
+              && i.MaSP == product.MaSP).FirstOrDefault();
+            //nếu tồn tại thì tăng số lượng ngược lại tạo mới và thêm vào db
+            if (productInOrderDetail != null)
+            {
+                db.Entry(productInOrderDetail).State = EntityState.Modified;
+                productInOrderDetail.SoLuongMua += 1;
+                db.SaveChanges();
+            }
+            else
+            {
+                ChiTietGioHang chiTietGioHang = new ChiTietGioHang();
+                chiTietGioHang.MaGioHang = cartOfAccount.MaGioHang;
+                chiTietGioHang.MaSP = product.MaSP;
+                chiTietGioHang.SoLuongMua = 1;
+                if (product.GiaKM == null) chiTietGioHang.Gia = product.Gia;
+                chiTietGioHang.Gia = (int)product.GiaKM;
+                db.ChiTietGioHangs.Add(chiTietGioHang);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
         public ActionResult Cart()
         {
-
-
-            return View();
+            List<ProductInCart> fakeData = new List<ProductInCart>();
+            if (Session["TenTaiKhoan"] == null)
+            {
+                ViewBag.Message = "Vui lòng đăng nhập để xem giỏ hàng !!";
+                
+                return View(fakeData);
+            }
+            //lấy tất cả sản phẩm trong giỏ hàng
+            var userName = Session["TenTaiKhoan"] as string;
+            var cart = db.GioHangs.ToList().Where(i => i.TenTaiKhoan.ToLower().Equals(userName.ToLower())).FirstOrDefault();
+            if (cart == null)
+            {
+                ViewBag.Message = "Giỏ hàng chưa có sản phẩm nào \n Vui lòng chọn sản phẩm !!";
+                return View(fakeData);
+            }
+            var products = db.ChiTietGioHangs.ToList().Where(i => i.MaGioHang == cart.MaGioHang);
+            List<ProductInCart> productInCarts = new List<ProductInCart>();
+            foreach (var item in products)
+            {
+                var product = db.SanPhams.Find(item.MaSP);
+                productInCarts.Add(new ProductInCart(cart.MaGioHang,product, item.SoLuongMua));
+            }
+            return View(productInCarts);
         }
 
-       
+
         public ActionResult Checkout()
         {
 
@@ -63,29 +131,25 @@ namespace Nhom3.Controllers
             return View(taiKhoan);
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditUser([Bind(Include = "TenTaiKhoan,MatKhau,Quyen,TinhTrang," +
-            "TenKhachHang,Email,SoDienThoai,DiaChi")] TaiKhoan taiKhoan, string PassValidate)
+
+        public ActionResult EditUser(TaiKhoan taiKhoan, string pass)
         {
 
-            string Pass = db.TaiKhoans.AsNoTracking().
-                Where(t => t.TenTaiKhoan.Equals(taiKhoan.TenTaiKhoan)).
-                FirstOrDefault().MatKhau;
-            if (Pass.Equals(PassValidate))
+
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                if (taiKhoan.MatKhau == pass)
                 {
                     db.Entry(taiKhoan).State = EntityState.Modified;
                     db.SaveChanges();
-                    TempData["message1"] = "Thành công";
+                    ViewBag.mess = "Thành công";
                     return RedirectToAction("Index");
                 }
-                ViewBag.Message2 = "Msg2";
+                ViewBag.mess = "Mật khẩu không đúng!!!";
                 return View(taiKhoan);
             }
             else
             {
-                ViewBag.Message3 = "Msg3";
                 return View(taiKhoan);
             }
 
@@ -98,44 +162,42 @@ namespace Nhom3.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(string TenTaiKhoan, string MatKhau)
-        {
-            if (string.IsNullOrEmpty(TenTaiKhoan))
-            {
-                ViewBag.ErrorTenTaiKhoan = "Tên tài khoản không được để trống";
-            }
-            if (string.IsNullOrEmpty(TenTaiKhoan))
-            {
-                ViewBag.ErrorMatKhau = "Mật khẩu không được để trống";
-            }
-            if (ModelState.IsValid)
-            {
-                var user = db.TaiKhoans.Where(t => t.TenTaiKhoan.Equals(TenTaiKhoan) && t.MatKhau.Equals(MatKhau) && t.Quyen == 0).ToList();
-                if (user.Count() > 0)
-                {
 
-                    if (user.FirstOrDefault().TinhTrang == false)
-                    {
-                        // Hien thi thong bao loi
-                        ViewBag.error = "Tài khoản bị khóa. Đăng nhập không thành công";
-                    }
-                    else
-                    {
-                        //Su dung session: add Session
-                        Session["TaiKhoan"] = user.FirstOrDefault();
-                        Session["TenKhachHang"] = user.FirstOrDefault().TenKhachHang;
-                        Session["TenTaiKhoan"] = user.FirstOrDefault().TenTaiKhoan;
-                        // Sang trang chu
-                        return RedirectToAction("Index");
-                    }
+        public ActionResult Login(TaiKhoan user)
+        {
+
+
+            var userGet = db.TaiKhoans.Where(t => t.TenTaiKhoan.ToLower().Equals(user.TenTaiKhoan.ToLower()) && t.MatKhau.Equals(user.MatKhau)).ToList();
+            if (user.TenTaiKhoan == null || user.MatKhau == null)
+            {
+                return View(userGet.FirstOrDefault());
+            }
+            if (userGet.Count() > 0)
+            {
+
+                if (userGet.FirstOrDefault().TinhTrang == false)
+                {
+                    // Hien thi thong bao loi
+                    ViewBag.error = "Tài khoản bị khóa. Đăng nhập không thành công";
+                    return View(userGet.FirstOrDefault());
                 }
                 else
                 {
-                    ViewBag.error = "Đăng nhập không thành công";
+                    //Su dung session: add Session
+                    Session["TaiKhoan"] = userGet.FirstOrDefault();
+                    Session["TenKhachHang"] = userGet.FirstOrDefault().TenKhachHang;
+                    Session["TenTaiKhoan"] = userGet.FirstOrDefault().TenTaiKhoan;
+                    // Sang trang chu
                 }
             }
-            return View();
+            else
+            {
+                ViewBag.error = "Tên tài khoản hoặc mật khẩu không chính xác!";
+                return View(userGet.FirstOrDefault());
+
+            }
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Users(string TenTK)
@@ -202,32 +264,51 @@ namespace Nhom3.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangePassword([Bind(Include = "TenTaiKhoan,MatKhau,Quyen,TinhTrang,TenKhachHang,Email,SoDienThoai,DiaChi")] TaiKhoan taiKhoan,
-            string OldPassword)
+        public ActionResult ChangePassword(TaiKhoan taiKhoan,
+            string newPass, string rePass)
         {
-            string old_pass = db.TaiKhoans.AsNoTracking().
-                Where(t => t.TenTaiKhoan.Equals(taiKhoan.TenTaiKhoan)).
-                FirstOrDefault().MatKhau;
-            if (old_pass.Equals(OldPassword))
+            var acc = db.TaiKhoans.Find(taiKhoan.TenTaiKhoan);
+            if (newPass.Equals(rePass))
             {
-                if (ModelState.IsValid)
-                {
-                    db.Entry(taiKhoan).State = EntityState.Modified;
-                    db.SaveChanges();
-                    TempData["message"] = "Thành công";
-                    return RedirectToAction("Index");
-                }
+
+                if (newPass.Length < 8) ViewBag.mess = "Mật khẩu ít nhất 8 kí tự!";
+
                 else
                 {
-                    ViewBag.Message = "Lỗi nhập dữ liệu!!!";
+                    db.Entry(acc).State = EntityState.Modified;
+                    acc.MatKhau = newPass;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
+
+
+
             }
             else
             {
-                ViewBag.Message = "Mật khẩu cũ không chính xác!!!";
+                ViewBag.mess = "Mật khẩu không khớp!!!";
             }
             return View(taiKhoan);
         }
+        public ActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Register(Register register)
+        {
+            if (!ModelState.IsValid)
+                return View();
+            TaiKhoan taiKhoan = new TaiKhoan();
+            taiKhoan.TenTaiKhoan = register.UserName;
+            taiKhoan.MatKhau = register.Password;
+            taiKhoan.Quyen = 1;
+            taiKhoan.TinhTrang = true;
+            db.TaiKhoans.Add(taiKhoan);
+            db.SaveChanges();
+            return View("Login", taiKhoan);
+        }
+
 
     }
 
