@@ -5,8 +5,8 @@
             <img src="https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png" alt="" width="20px" height="20px">
 
         </a>
-        <a class="navbar-brand" href="#" style="justify-content: center;color: black;">@Session["FullName"]</a>
-        <a class="navbar-brand" href="@Url.Action("Logout","Home")" style="display:flex;justify-content: flex-end;color: black; margin-left:1200px"><i class="fa fa-power-off"></i> Đăng xuất</a>
+        <a class="navbar-brand" href="@Url.Action("Details","Account",new { id=Session["FullName"]})" style="justify-content: center;color: black;">@Session["FullName"]</a>
+        <a class="navbar-brand" href="@Url.Action("Logout","Home")" style="color: black;justify-content: center;margin-left:1140px;"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
     </div>
 
 
@@ -15,7 +15,8 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-item">
                     <a href="@Url.Action("Index","Home","")" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")">
-                    <i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
+                        <i class="fa fa-dashboard fa-fw"></i>Dashboard
+                    </a>
                 </li>
 
                 <li class="nav-item">
@@ -31,7 +32,7 @@
                 <li class="nav-item">
                     <a href="@Url.Action("Index","Account","")" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Account" ? "active" : "")"><i class="fa fa-users"></i>Quản lý tài khoản</a>
                 </li>
-
+              
             </ul>
         </div>
 

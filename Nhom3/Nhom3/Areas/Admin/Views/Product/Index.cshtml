@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Nhom3.Core.Domains.SanPham>
-
+﻿@model PagedList.IPagedList<Nhom3.Core.Domains.SanPham>
+@using System.Globalization;
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -12,16 +13,16 @@
     </div>
 </div>
 
-<button class="btn btn-sm btn-success" style="padding:10px; float:left;margin-top:10px;">
-    <a href="@Url.Action("Create","Product")" style="text-decoration: none; color: white;">+Thêm sản phẩm</a>
+<button class="btn btn-sm btn-success" style="padding:10px; float:left;margin-top:10px; margin-bottom:10px;border-radius:20px;">
+    <a href="@Url.Action("Create","Product")" style="text-decoration: none; color: white;"><i class="fa fa-plus" aria-hidden="true"></i> Thêm mới</a>
 </button>
 
 <div class="row">
     <div class="col-lg-12">
 
-        <table class="table table-hover table-striped">
+        <table class="table table-hover" style="border-radius:20px;background-color:powderblue;">
             <thead>
-                <tr>
+                <tr style="color:black;text-align:center;">
                     <th>Mã sản phẩm</th>
                     <th>Ảnh</th>
                     <th>Tên sản phẩm</th>
@@ -43,25 +44,26 @@
                             string ImagePath = "~/wwwroot/Content/images/" + item.Anh;
                         }
 
-                        <td><img src="@Url.Content(ImagePath)" width="50" height="50" class="img-thumbnail" />
-                        <br />
-                       
+                        <td>
+                            <img src="@Url.Content(ImagePath)" width="50" height="50" class="img-thumbnail" />
+                            <br />
+
                         </td>
                         <td>@item.TenSP</td>
                         <td>@item.DanhMuc.TenDM</td>
-                        <td>@item.Gia</td>
-                        <td>@item.GiaKM</td>
-                      
+                        <td>@item.Gia.ToString("C0", CultureInfo.CurrentCulture).Substring(1)</td>
+                        <td>@Convert.ToInt32(item.GiaKM).ToString("C0", CultureInfo.CurrentCulture).Substring(1)</td>
+
 
                         <td>
                             <button class="btn  btn-sm btn-info">
-                                <a href="@Url.Action("Details","Product", new{id = item.MaSP})" style="text-decoration: none; color: white;">Xem</a>
+                                <a href="@Url.Action("Details","Product", new{id = item.MaSP})" style="text-decoration: none; color: white;"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             </button>
                             <button class="btn  btn-sm btn-warning">
-                                <a href="@Url.Action("Edit","Product" , new {id = item.MaSP })" style="text-decoration: none; color: white;">Sửa</a>
+                                <a href="@Url.Action("Edit","Product" , new {id = item.MaSP })" style="text-decoration: none; color: white;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                             </button>
                             <button class="btn  btn-sm btn-danger">
-                                <a href="@Url.Action("Delete","Product", new{id = item.MaSP})" style="text-decoration: none; color: white;">Xoá</a>
+                                <a href="@Url.Action("Delete","Product", new{id = item.MaSP})" style="text-decoration: none; color: white;"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                             </button>
 
                         </td>
@@ -71,6 +73,9 @@
             }
 
         </table>
+        <div class="paging_news">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new {page}))
+        </div>
     </div>
 </div>
 

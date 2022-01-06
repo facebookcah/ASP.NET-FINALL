@@ -34,7 +34,8 @@ namespace Nhom3.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            var listProduct = db.ChiTietGioHangs.ToList().Where(i=>i.MaGioHang==hoaDon.MaGioHang).ToList();
+            var listProduct = db.ChiTietGioHangs.ToList().Where(i => i.MaGioHang == hoaDon.MaGioHang).ToList();
+
             List<OrderProduct> products = new List<OrderProduct>();
             foreach (var pro in listProduct)
             {
@@ -45,7 +46,10 @@ namespace Nhom3.Areas.Admin.Controllers
                     products.Add(orderProduct);
                 }
             }
-            OrderDetails orderDetails = new OrderDetails(hoaDon,products);
+            OrderDetails orderDetails = new OrderDetails(hoaDon, products);
+            if (listProduct.Count > 1)
+                orderDetails.PhiShip = 0;
+            if (listProduct.Count >=2) orderDetails.PhiShip = 15000;
             return View(orderDetails);
         }
 
@@ -106,24 +110,25 @@ namespace Nhom3.Areas.Admin.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        
+
         public ActionResult Edit(int? orderCode, string TinhTrang)
         {
             var orderGet = db.HoaDons.Find(orderCode);
-            
-            try {
-                
+
+            try
+            {
+
                 db.Entry(orderGet).State = EntityState.Modified;
                 orderGet.TinhTrang = TinhTrang;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return RedirectToAction("Index");
             }
-            
-           
+
+
         }
 
         // GET: Admin/Order/Delete/5

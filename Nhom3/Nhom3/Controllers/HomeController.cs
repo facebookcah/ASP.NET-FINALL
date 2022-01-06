@@ -48,7 +48,7 @@ namespace Nhom3.Controllers
             {
                 List<ProductInCart> fakeData = new List<ProductInCart>();
                 ViewBag.Message = "Vui lòng đăng nhập để tiếp tục mua sắm !!";
-                return View("Cart",fakeData);
+                return View("Cart", fakeData);
             }
             //pass case đăng nhập thì tìm giỏ hàng của tài khoản
             var code = Session["TenTaiKhoan"] as string;
@@ -56,9 +56,10 @@ namespace Nhom3.Controllers
             //kiểm tra tài khoản đã có giỏ hàng chưa
             var cartOfAccount = carts.Where(i => i.TenTaiKhoan.ToLower().Equals(code.ToLower())).FirstOrDefault();
             //nếu chưa thì tạo giỏ hàng mới cho tài khoản
+            GioHang cart = new GioHang();
             if (cartOfAccount == null)
             {
-                GioHang cart = new GioHang();
+                cart = new GioHang();
                 cart.TenTaiKhoan = Session["TenTaiKhoan"] as string;
                 db.GioHangs.Add(cart);
                 db.SaveChanges();
@@ -66,8 +67,17 @@ namespace Nhom3.Controllers
             // get product selected
             var product = db.SanPhams.Find(productCode);
             //check exist in chitietgiohang
-            var productInOrderDetail = db.ChiTietGioHangs.ToList().Where(i => i.MaGioHang == cartOfAccount.MaGioHang
-              && i.MaSP == product.MaSP).FirstOrDefault();
+            var productInOrderDetail = new ChiTietGioHang();
+            if (cartOfAccount != null)
+            {
+                productInOrderDetail = db.ChiTietGioHangs.ToList().Where(i => i.MaGioHang == cartOfAccount.MaGioHang
+            && i.MaSP == product.MaSP).ToList().FirstOrDefault();
+            }
+            else
+            {
+                productInOrderDetail = db.ChiTietGioHangs.ToList().Where(i => i.MaGioHang == cart.MaGioHang
+                && i.MaSP == product.MaSP).ToList().FirstOrDefault();
+            }
             //nếu tồn tại thì tăng số lượng ngược lại tạo mới và thêm vào db
             if (productInOrderDetail != null)
             {
@@ -77,16 +87,41 @@ namespace Nhom3.Controllers
             }
             else
             {
-                ChiTietGioHang chiTietGioHang = new ChiTietGioHang();
-                chiTietGioHang.MaGioHang = cartOfAccount.MaGioHang;
-                chiTietGioHang.MaSP = product.MaSP;
-                chiTietGioHang.SoLuongMua = 1;
-                if (product.GiaKM == null) chiTietGioHang.Gia = product.Gia;
-                chiTietGioHang.Gia = (int)product.GiaKM;
-                db.ChiTietGioHangs.Add(chiTietGioHang);
-                db.SaveChanges();
+                if (cartOfAccount == null)
+                {
+
+
+                    ChiTietGioHang chiTietGioHang = new ChiTietGioHang();
+                    chiTietGioHang.MaGioHang = cart.MaGioHang;
+                    chiTietGioHang.MaSP = product.MaSP;
+                    chiTietGioHang.SoLuongMua = 1;
+                    if (product.GiaKM == null) chiTietGioHang.Gia = product.Gia;
+                    chiTietGioHang.Gia = (int)product.GiaKM;
+                    db.ChiTietGioHangs.Add(chiTietGioHang);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    ChiTietGioHang chiTietGioHang = new ChiTietGioHang();
+                    chiTietGioHang.MaGioHang = cartOfAccount.MaGioHang;
+                    chiTietGioHang.MaSP = product.MaSP;
+                    chiTietGioHang.SoLuongMua = 1;
+                    if (product.GiaKM == null) chiTietGioHang.Gia = product.Gia;
+                    chiTietGioHang.Gia = (int)product.GiaKM;
+                    db.ChiTietGioHangs.Add(chiTietGioHang);
+                    db.SaveChanges();
+                }
             }
-            return RedirectToAction("Index");
+            var userName = Session["TenTaiKhoan"] as string;
+            var cart1 = db.GioHangs.ToList().Where(i => i.TenTaiKhoan.ToLower().Equals(userName.ToLower())).FirstOrDefault();
+            var products = db.ChiTietGioHangs.ToList().Where(i => i.MaGioHang == cart1.MaGioHang);
+            List<ProductInCart> productInCarts = new List<ProductInCart>();
+            foreach (var item in products)
+            {
+                var productInCart = db.SanPhams.Find(item.MaSP);
+                productInCarts.Add(new ProductInCart(cart1.MaGioHang, productInCart, item.SoLuongMua));
+            }
+            return View("Cart", productInCarts);
         }
         public ActionResult Cart()
         {
@@ -94,7 +129,7 @@ namespace Nhom3.Controllers
             if (Session["TenTaiKhoan"] == null)
             {
                 ViewBag.Message = "Vui lòng đăng nhập để xem giỏ hàng !!";
-                
+
                 return View(fakeData);
             }
             //lấy tất cả sản phẩm trong giỏ hàng
@@ -110,18 +145,48 @@ namespace Nhom3.Controllers
             foreach (var item in products)
             {
                 var product = db.SanPhams.Find(item.MaSP);
-                productInCarts.Add(new ProductInCart(cart.MaGioHang,product, item.SoLuongMua));
+                productInCarts.Add(new ProductInCart(cart.MaGioHang, product, item.SoLuongMua));
             }
             return View(productInCarts);
         }
 
 
-        public ActionResult Checkout()
+        public ActionResult Checkout(int? cartCode)
         {
 
+            ViewBag.cartCode = cartCode;
 
             return View();
         }
+        [HttpPost]
+        public ActionResult Checkout(HoaDon hoaDon)
+        {
+            if (hoaDon.DcNhanHang == null)
+            {
+                return View(hoaDon);
+            }
+            var cart = db.GioHangs.ToList().Where(i => i.MaGioHang == hoaDon.MaGioHang).FirstOrDefault();
+            if (cart == null)
+            {
+                string error = "Vui lòng đăng nhập hoặc thêm sản phẩm vào giỏ hàng để thanh toán";
+                ViewBag.Succcess = error;
+                return View(hoaDon);
+            }
+            var countProduct = db.ChiTietGioHangs.ToList().Where(i => i.MaGioHang == hoaDon.MaGioHang).ToList().Count;
+            hoaDon.NgayDat = DateTime.Now;
+            hoaDon.TinhTrang = "Đang giao";
+            if (countProduct < 1)
+                hoaDon.PhiShip = 15000;
+            else
+                hoaDon.PhiShip = 0;
+
+            db.HoaDons.Add(hoaDon);
+            db.SaveChanges();
+            string mess = "Đặt hàng thành công";
+            ViewBag.Succcess = mess;
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
         public ActionResult EditUser(string TenTK)
         {
@@ -253,7 +318,7 @@ namespace Nhom3.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
-            return RedirectToAction("Login");
+            return RedirectToAction("Index");
         }
 
         public ActionResult ChangePassword(string TenTK)
@@ -299,6 +364,12 @@ namespace Nhom3.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
+            var exist = db.TaiKhoans.ToList().Any(i => i.TenTaiKhoan.ToLower().Equals(register.UserName.ToLower()));
+            if (exist)
+            {
+                ViewBag.Error = "Tên đăng nhập đã tồn tại";
+                return View();
+            }
             TaiKhoan taiKhoan = new TaiKhoan();
             taiKhoan.TenTaiKhoan = register.UserName;
             taiKhoan.MatKhau = register.Password;
@@ -307,6 +378,47 @@ namespace Nhom3.Controllers
             db.TaiKhoans.Add(taiKhoan);
             db.SaveChanges();
             return View("Login", taiKhoan);
+        }
+        public ActionResult Plus(int? cartCode, int? productCode)
+        {
+            var product = db.ChiTietGioHangs.ToList().Where(i => i.MaGioHang == cartCode && i.MaSP == productCode).FirstOrDefault();
+            if (product != null)
+            {
+                db.Entry(product).State = EntityState.Modified;
+                product.SoLuongMua += 1;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Cart");
+        }
+
+        public ActionResult Minius(int? cartCode, int? productCode)
+        {
+            var product = db.ChiTietGioHangs.ToList().Where(i => i.MaGioHang == cartCode && i.MaSP == productCode).FirstOrDefault();
+            if (product != null)
+            {
+                if (product.SoLuongMua == 1)
+                {
+                    db.ChiTietGioHangs.Remove(product);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    db.Entry(product).State = EntityState.Modified;
+                    product.SoLuongMua -= 1;
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Cart");
+        }
+        public ActionResult RemoveFromCart(int? cartCode, int? productCode)
+        {
+            var product = db.ChiTietGioHangs.ToList().Where(i => i.MaGioHang == cartCode && i.MaSP == productCode).FirstOrDefault();
+            if (product != null)
+            {
+                db.ChiTietGioHangs.Remove(product);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Cart");
         }
 
 

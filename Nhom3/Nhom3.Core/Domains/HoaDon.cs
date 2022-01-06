@@ -30,7 +30,7 @@
         [Display(Name = "Ghi chú")]
 
         public string GhiChu { get; set; }
-
+        [Required(ErrorMessage ="Địa chỉ nhận hàng không được để trống !")]
         [Column(TypeName = "ntext")]
         [Display(Name = "Địa chỉ nhận hàng")]
 

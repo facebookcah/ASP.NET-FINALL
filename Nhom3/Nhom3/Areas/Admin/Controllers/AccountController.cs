@@ -15,8 +15,9 @@ namespace Nhom3.Areas.Admin.Controllers
         private FlowerContext db = new FlowerContext();
 
         // GET: Admin/Account
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
+
             return View(db.TaiKhoans.ToList());
         }
 
@@ -38,7 +39,7 @@ namespace Nhom3.Areas.Admin.Controllers
         // GET: Admin/Account/Create
         public ActionResult Create()
         {
-            
+
             return View();
         }
 
@@ -50,10 +51,9 @@ namespace Nhom3.Areas.Admin.Controllers
         public ActionResult Create([Bind(Include = "TenTaiKhoan,MatKhau,Quyen,TinhTrang,TenKhachHang,Email,SoDienThoai,DiaChi")] TaiKhoan taiKhoan)
         {
             var accounts = db.TaiKhoans.ToList();
-            var exist=accounts.Any(i => i.TenTaiKhoan.ToLower().Equals(taiKhoan.TenTaiKhoan.ToLower()));
-         
             if (ModelState.IsValid)
             {
+                var exist = accounts.Any(i => i.TenTaiKhoan.ToLower().Equals(taiKhoan.TenTaiKhoan.ToLower()));
                 if (!exist)
                 {
                     db.TaiKhoans.Add(taiKhoan);
@@ -64,7 +64,7 @@ namespace Nhom3.Areas.Admin.Controllers
                 {
                     ViewBag.duplicate = "no";
                     ViewBag.Error = "Tên tài khoản đã tồn tại";
-                    return View("Create",taiKhoan);
+                    return View("Create", taiKhoan);
                 }
             }
             else
@@ -120,44 +120,59 @@ namespace Nhom3.Areas.Admin.Controllers
         }
 
         // POST: Admin/Account/Delete/5
-       [HttpPost]
+        [HttpPost]
         public ActionResult DeleteConfirmed(string id)
         {
+            //lấy ra tài khoản
             TaiKhoan taiKhoan = db.TaiKhoans.Find(id);
-            var cart = db.GioHangs.ToList();
-            var existInCart = cart.Any(i => i.TenTaiKhoan.Equals(id));
-            if (existInCart)
+            if (taiKhoan.TenTaiKhoan.ToLower().Equals(Session["FullName"].ToString().ToLower())) 
             {
-                var cartOfAccount = cart.Where(i => i.TenTaiKhoan.Equals(id)).FirstOrDefault();
-                var cartCode = cartOfAccount.MaGioHang;
-                var countProductInCart = db.ChiTietGioHangs.Where(i=>i.MaGioHang==cartCode).ToList();
-                if (countProductInCart.Count == 0)
+                ViewBag.Error = "Không thể xóa tài khoản bạn đang đăng nhập !!!";
+                return View("Delete", taiKhoan);
+            }
+            //tìm kiếm giỏ hàng của tài khoản
+            var carts = db.GioHangs.ToList();
+            var cartOfAccount = carts.Where(i => i.TenTaiKhoan.Equals(id)).FirstOrDefault();
+            //tồn tại giỏ hàng
+            if (cartOfAccount != null)
+            {
+                //check tồn tại hóa đơn
+                var order = db.HoaDons.ToList().Where(i => i.MaGioHang == cartOfAccount.MaGioHang).ToList();
+                //nếu tồn tại trong hóa đơn thì báo lỗi
+                if (order.Count > 0)
                 {
-                    var hoadons = db.HoaDons.ToList().Where(i => i.MaGioHang == cartCode).ToList();
-                    if (hoadons != null)
-                    {
-                        foreach (var item in hoadons)
-                        {
-                            db.HoaDons.Remove(item);
-                        }
-                    }
-                    if(cartOfAccount!=null)
+                    ViewBag.Error = "Không xóa được tài khoản! Do tài khoản này đã có đơn hàng";
+                    return View("Delete", taiKhoan);
+                }
+                //nếu không tồn tại hóa đơn thì xóa chi tiết giỏ hàng-xóa giỏ hàng-xóa tài khoản
+                var productInCart = db.ChiTietGioHangs.Where(i => i.MaGioHang == cartOfAccount.MaGioHang).ToList();
+
+                if (productInCart.Count == 0)
+                {
+                    //nếu giỏ hàng ko có hàng thì xóa giỏ hàng
                     db.GioHangs.Remove(cartOfAccount);
-                    if(taiKhoan!=null)
                     db.TaiKhoans.Remove(taiKhoan);
-                   
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    ViewBag.Error = "Không xóa được tài khoản! Do tài khoản này đã có đơn hàng";
-                    return View("Delete",taiKhoan);
+                    foreach (var item in productInCart)
+                    {
+                        db.ChiTietGioHangs.Remove(item);
+                    }
+                    db.GioHangs.Remove(cartOfAccount);
+                    db.TaiKhoans.Remove(taiKhoan);
+                    db.SaveChanges();
                 }
             }
-            
-            db.TaiKhoans.Remove(taiKhoan);
-            db.SaveChanges();
+            //nếu ko có giỏ hàng thì sẽ ko có hóa đơn và sẽ xóa đc
+            else
+            {
+                db.TaiKhoans.Remove(taiKhoan);
+                db.SaveChanges();
+                
+            }
             return RedirectToAction("Index");
         }
 

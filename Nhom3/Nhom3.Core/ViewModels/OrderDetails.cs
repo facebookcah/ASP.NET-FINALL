@@ -40,7 +40,7 @@ namespace Nhom3.Core.ViewModels
             this.MaHoaDon = hoaDon.MaHoaDon;
             this.NgayDat = hoaDon.NgayDat;
             this.TinhTrang = hoaDon.TinhTrang;
-            this.PhiShip = hoaDon.PhiShip;
+            
             this.GhiChu = hoaDon.GhiChu;
             this.DcNhanHang = hoaDon.DcNhanHang;
             this.taiKhoan = hoaDon.GioHang.TenTaiKhoan;

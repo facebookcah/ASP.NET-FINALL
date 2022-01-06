@@ -10,7 +10,7 @@
 
 <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
 <style>
-body { background-image: url('https://www.tourchauau.net/images/news/dia-diem-du-lich/10-canh-dong-hoa-dep-nhat-the-gioi-1.4.jpg'); background-size: cover; backdrop-filter: blur(5px); }
+body { background-image: url('https://www.tourchauau.net/images/news/dia-diem-du-lich/10-canh-dong-hoa-dep-nhat-the-gioi-1.4.jpg'); background-size: cover; backdrop-filter: blur(5px);background-repeat:no-repeat; }
 
     a {
         color: #58bff6;
@@ -66,16 +66,15 @@ body { background-image: url('https://www.tourchauau.net/images/news/dia-diem-du
     div#form {
         position: absolute;
         width: 360px;
-        height: 320px;
+       
         height: auto;
         background-color: #fff;
-        margin: auto;
+     
         border-radius: 5px;
         padding: 20px;
-        left: 50%;
-        top: 50%;
-        margin-left: -180px;
-        margin-top: -200px;
+        left: 35%;
+        top: 50px;
+       
     }
 
     div.form-item {
@@ -167,33 +166,61 @@ body { background-image: url('https://www.tourchauau.net/images/news/dia-diem-du
 <body>
     @using (Html.BeginForm("Login", "Home", FormMethod.Post))
     {
-         
+
     <div id="formWrapper">
       
         <div id="form" style="width:500px;">
-            <span style="text-align:center;color:red; font-size:15px;">@ViewBag.Error</span>
-            <div class="logo">
-                <h1 class="text-center head">Đăng nhập</h1>
-            </div>
+            @if (ViewBag.Error != null)
+            {
+                <span style="text-align:center;color:red; font-size:15px;">@ViewBag.Error</span>
 
-            <div style="margin-top:-30px; margin-left:50px;">
+                <div class="logo">
+                    <h1 class="text-center head">Đăng nhập</h1>
+                </div>
 
-                <label style="margin-left:10px;">Tên đăng nhập</label>
-                <input type="text" name="TenTaiKhoan" id="email" class="form-style" autocomplete="off" />
-                @Html.ValidationMessageFor(model => model.TenTaiKhoan, "", new { @class = "text-danger" })
-            </div>
-            <div style="margin-bottom:20px;margin-left:50px;">
-                <label style="margin-left:10px;">Mật khẩu</label>
-                <input type="password" name="MatKhau" id="password" class="form-style" />
-                @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
 
-            </div>
-            <div >
-                
+                <div style="margin-top:-30px; margin-left:50px;">
+
+                    <label style="margin-left:10px;">Tên đăng nhập</label>
+                    @Html.EditorFor(model => model.TenTaiKhoan, new { htmlAttributes = new { @class = "form-style" } })
+
+
+                </div>
+                <div style="margin-bottom:20px;margin-left:50px;">
+                    <label style="margin-left:10px;">Mật khẩu</label>
+                    @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-style", @type = "password" } })
+
+
+                </div>
+
+            }
+            else
+            {
+                <div class="logo">
+                    <h1 class="text-center head">Đăng nhập</h1>
+                </div>
+
+                <div style="margin-top:-30px; margin-left:50px;">
+
+                    <label style="margin-left:10px;">Tên đăng nhập</label>
+                    @Html.EditorFor(model => model.TenTaiKhoan, new { htmlAttributes = new { @class = "form-style" } })
+
+                    @Html.ValidationMessageFor(model => model.TenTaiKhoan, "", new { @class = "text-danger" })
+                </div>
+                <div style="margin-bottom:20px;margin-left:50px;">
+                    <label style="margin-left:10px;">Mật khẩu</label>
+                    @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-style", @type = "password" } })
+                    @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+
+                </div>
+            }
+
+            <div>
+
                 <input type="submit" class="login pull-right" value="Đăng nhập" style="margin-right:180px;">
                 <div class="clear-fix"></div>
             </div>
-            <div >
+            <div>
                 <p style="text-align:center; margin-top:20px;">Bạn chưa có tài khoản? <a href="@Url.Action("Register","Home")">Đăng kí</a></p>
             </div>
         </div>

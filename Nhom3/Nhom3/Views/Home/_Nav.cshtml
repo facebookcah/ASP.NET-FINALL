@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-2 clearfix">
                 <div class="logo pull-left">
-                    <a href="@Url.Action("Index","Home")"><img src="images/home/logo.png" alt="" /></a>
+                    <a href="@Url.Action("Index","Home")"><img src="https://thegioihoa.net/giaodien/default/images/logo.png" alt="" /></a>
                 </div>
             </div>
             <div class="col-md-10 clearfix">
@@ -49,41 +49,22 @@
                 </div>
                 <div class="mainmenu pull-left">
                     <ul class="nav navbar-nav collapse navbar-collapse">
-                        <li><a href="@Url.Action("Index", "Home")" class="active">Trang chủ</a></li>
+                        <li><a href="@Url.Action("Index", "Home")" class="active" style="font-size:25px;">Trang chủ</a></li>
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown" data-toggle="dropdown">Danh mục sản phẩm</a>
-                            <ul class="dropdown-menu">
+                            <a href="#" class="navbar-link dropdown" data-toggle="dropdown" style="">Danh mục sản phẩm</a>
+                            <div class="dropdown-menu" style="width:200px;color:black;" >
                                 @foreach (var item in Model)
                                 {
-                                    <li style="float:left;">
-                                        <a href="@Url.Action("Index","Home", new { madm = item.MaDM })">@Html.DisplayFor(modelItem => item.TenDM)</a>
-                                    </li>
+                                    
+                                        <a href="@Url.Action("Index","Home", new { madm = item.MaDM })" class="dropdown-toggle" style="padding:30px; margin-bottom:10px;" >@Html.DisplayFor(modelItem => item.TenDM)</a><br /><br />
+                                    
                                 }
-                            </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md-4">
-               
-                    @using (Html.BeginForm())
-                    {
-                    <div class="form-horizontal">
-                        @Html.TextBox("searchString", "", htmlAttributes: new { @class = "form-control", @placeholder = "Nhập nội dung tìm kiếm" })
-                        <input type="submit" hidden />
-                    </div>
-                     }
-                
-                @*<div class="search_box pull-right">
-                        @using (Html.BeginForm())
-                        {   <input type="text"
-                                placeholder="Search" />
-
-
-                        }
-
-                    </div>*@
-            </div>
+         
         </div>
     </div>
 </div><!--/header-bottom-->

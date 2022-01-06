@@ -15,9 +15,12 @@
     </div>
     <div class="form-horizontal">
 
-
+        @if (ViewBag.Message != null)
+        {
+            <span class="alert alert-danger col-md-12 " style="margin-top:10px;">@ViewBag.Message</span>
+        }
         @Html.ValidationSummary(true, "", new { @class = "text-danger col-md-12" })
-        @Html.HiddenFor(model=>model.MaDM)
+        @Html.HiddenFor(model => model.MaDM)
 
         <div class="form-group col-md-12 ">
             @Html.LabelFor(model => model.TenDM, "Tên danh mục", htmlAttributes: new { @class = "control-label", @style = "float:left;                                                                    " })

@@ -48,8 +48,15 @@ namespace Nhom3.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MaDM,TenDM")] DanhMuc danhMuc)
         {
+            
             if (ModelState.IsValid)
             {
+                var isExist = db.DanhMucs.ToList().Any(i => i.TenDM.ToLower().Trim().Equals(danhMuc.TenDM.ToLower().Trim()));
+                if (isExist)
+                {
+                    ViewBag.Message = "Danh mục đã tồn tại! Vui lòng chọn tên danh mục khác";
+                    return View(danhMuc);
+                }
                 db.DanhMucs.Add(danhMuc);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -82,6 +89,12 @@ namespace Nhom3.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var isExist = db.DanhMucs.ToList().Any(i => i.TenDM.ToLower().Trim().Equals(danhMuc.TenDM.ToLower().Trim()));
+                if (isExist)
+                {
+                    ViewBag.Message = "Danh mục đã tồn tại! Vui lòng chọn tên danh mục khác";
+                    return View(danhMuc);
+                }
                 db.Entry(danhMuc).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

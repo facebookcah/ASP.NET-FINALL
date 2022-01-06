@@ -21,8 +21,7 @@
         [Required(ErrorMessage = "Tên tài khoản là bắt buộc!")]
         public string TenTaiKhoan { get; set; }
         [Display(Name = "Mật khẩu")]
-        [MaxLength(15, ErrorMessage = "Mật khẩu không vượt quá 15 kí tự")]
-        [MinLength(8, ErrorMessage = "Mật khẩu không ít hơn 8 kí tự")]
+        
         [Required(ErrorMessage = "Mật khẩu khoản là bắt buộc!")]
         public string MatKhau { get; set; }
         [Display(Name = "Phân vùng")]

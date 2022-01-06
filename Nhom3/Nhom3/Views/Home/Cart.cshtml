@@ -35,7 +35,7 @@
                             <td>Giá KM</td>
                             <td>Số lượng</td>
                             <td>Tổng</td>
-
+                            <td>Xóa</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,15 +44,16 @@
                             <tr>
                                 <td>@item.Name</td>
                                 <td>
-                                    <img src="~/wwwroot/Content/images/@item.Image" width="200" height="200"/>
+                                    <img src="~/wwwroot/Content/images/@item.Image" width="200" height="200" />
                                 </td>
                                 <td>@item.Price.ToString("C0", CultureInfo.CurrentCulture).Substring(1)</td>
-                                <td>@item.SalePrice.ToString("C0",CultureInfo.CurrentCulture).Substring(1)</td>
+                                <td>@item.SalePrice.ToString("C0", CultureInfo.CurrentCulture).Substring(1)</td>
                                 <td>
-                                    <a href="@Url.Action("Plus","Home",new {cartCode=item.Code,productCode=item.Code})"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-                                    @item.Quantity 
-                                    <a href="@Url.Action("Minius","Home",new {cartCode=item.Code,productCode=item.Code})"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
+                                    <a href="@Url.Action("Minius","Home",new {cartCode=item.CartCode,productCode=item.Code})"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
+                                    @item.Quantity
+                                    <a href="@Url.Action("Plus","Home",new {cartCode=item.CartCode,productCode=item.Code})"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
                                 </td>
+
                                 @{ string sum = "";
                                     if (item.SalePrice == null)
                                     {
@@ -62,6 +63,9 @@
 
                                     <td>@sum</td>
                                 }
+                                <td>
+                                    <a href="@Url.Action("RemoveFromCart","Home",new {cartCode=item.CartCode,productCode=item.Code})"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                </td>
                             </tr>
                         }
 
@@ -79,7 +83,10 @@
         {
             totalOfProduct += item.SalePrice * item.Quantity;
         }
-        totalOfProduct += item.Price * item.Quantity;
+        else
+        {
+            totalOfProduct += item.Price * item.Quantity;
+        }
     }
 
     string totalOfproductStr = totalOfProduct.ToString("C0", CultureInfo.CurrentCulture).Substring(1) + " VND";
@@ -88,14 +95,23 @@
     {
         ship = 0;
     }
-    if(Model.Count==1)
+    if (Model.Count == 1)
     {
         ship = 15000;
     }
 
     var shipStr = ship.ToString("C0", CultureInfo.CurrentCulture).Substring(1) + " VND";
 
-    var totalStr= (totalOfProduct + ship).ToString("C0", CultureInfo.CurrentCulture).Substring(1) + " VND";
+    var totalStr = (totalOfProduct + ship).ToString("C0", CultureInfo.CurrentCulture).Substring(1) + " VND";
+}
+
+@{
+    int cartCode = 0;
+    if (Model.ToList().Count != 0)
+    {
+        cartCode = Model.FirstOrDefault().CartCode;
+    }
+
 }
 <section id="do_action">
     <div class="container">
@@ -107,7 +123,7 @@
                     <li>Tổng tiền<span>@totalStr</span></li>
                 </ul>
                 <a class="btn btn-default update" href="@Url.Action("Index","Home")">Mua thêm</a>
-                <a class="btn btn-default check_out" href="@Url.Action("Checkout","Home")">Thanh toán</a>
+                <a class="btn btn-default check_out" href="@Url.Action("Checkout","Home",new { cartCode=cartCode})">Thanh toán</a>
             </div>
         </div>
     </div>

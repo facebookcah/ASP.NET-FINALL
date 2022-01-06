@@ -185,19 +185,21 @@
                 <div style=" margin-left:50px;">
 
                     <label style="margin-left:10px;">Tên đăng nhập</label>
-                    <input type="text" name="UserName" id="email" class="form-style" autocomplete="off" />
+                   
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-style" } })
+
                     @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                 </div>
                 <div style="margin-bottom:20px;margin-left:50px;">
                     <label style="margin-left:10px;">Mật khẩu</label>
-                    <input type="password" name="Password" id="password" class="form-style" />
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-style", @type = "password" } })
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
 
 
                 </div>
                 <div style="margin-bottom:20px;margin-left:50px;">
                     <label style="margin-left:10px;">Xác nhận mật khẩu</label>
-                    <input type="password" name="RePassword" id="password" class="form-style" />
+                    @Html.EditorFor(model => model.RePassword, new { htmlAttributes = new { @class = "form-style",@type="password" } })
                     @Html.ValidationMessageFor(model => model.RePassword, "", new { @class = "text-danger" })
 
                 </div>

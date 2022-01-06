@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Nhom3.Core.Domains;
-
+using PagedList;
 namespace Nhom3.Areas.Admin.Controllers
 {
     public class ProductController : Controller
@@ -15,10 +15,13 @@ namespace Nhom3.Areas.Admin.Controllers
         private FlowerContext db = new FlowerContext();
 
         // GET: Admin/Product
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+        
             var sanPhams = db.SanPhams;
-            return View(sanPhams.ToList());
+            return View(sanPhams.ToList().ToPagedList(pageNumber,pageSize));
         }
 
         // GET: Admin/Product/Details/5
@@ -173,7 +176,6 @@ namespace Nhom3.Areas.Admin.Controllers
                     sanPham.GiaKM = GiaKM;
                     sanPham.MaDM = MaDM;
                     sanPham.MoTa = MoTa;
-
                     db.SaveChanges();
                 }
                 else

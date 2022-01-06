@@ -20,6 +20,7 @@ namespace Nhom3.Core.ViewModels
         public string Password { get; set; }
         [Required(ErrorMessage = "Xác nhận mật khẩu không được để trống")]
         [Display(Name = "Xác nhận mật khẩu")]
+        [Compare("Password",ErrorMessage ="Mật khẩu không khớp!")]
         public string RePassword { get; set; }
     }
 }

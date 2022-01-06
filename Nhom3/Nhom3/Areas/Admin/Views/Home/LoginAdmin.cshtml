@@ -31,7 +31,7 @@
         background-size: cover;
         -webkit-font-smoothing: antialiased;
         font: normal 14px Roboto,arial,sans-serif;
-        font-family: 'Dancing Script', cursive !important;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 
     .container {
@@ -92,9 +92,8 @@
 </style>
 <body>
     @if (ViewBag.Error != null)
-    { 
-        <span style="color:red; font-size:20px; text-align:center;"><i class="icon-bar alert"></i>@ViewBag.Error</span>
-    }
+    {
+<span style="color:red; font-size:20px; text-align:center;"><i class="icon-bar alert"></i>@ViewBag.Error</span>}
 
     <!-- Page Content -->
     <div class="container" style="justify-content:center;">
@@ -106,19 +105,21 @@
                     </br>
                     <h4>Đăng nhập</h4>
                     </br>
-                    @using (Html.BeginForm("LoginAdmin","Home",FormMethod.Post))
+                    @using (Html.BeginForm("LoginAdmin", "Home", FormMethod.Post))
                     {
-                        <input type="text" id="userName" name="TenTaiKhoan" class="form-control input-sm chat-input" placeholder="Tên đăng nhập" style="margin-bottom:20px; padding:10px;"/>
-                         @Html.ValidationMessageFor(model => model.TenTaiKhoan, "", new { @class = "text-danger", @style = "font-size:20px;" })
-                        <input type="password" id="userPassword" name="MatKhau" class="form-control input-sm chat-input" placeholder="Mật khẩu" style="margin-bottom:20px;padding:10px;"/>
-                         @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger",@style="font-size:20px;" })
+        @Html.EditorFor(model => model.TenTaiKhoan, new { htmlAttributes = new { @class = "form-control input-sm chat-input", @style = "margin-bottom:20px; padding:10px;color:black;", @placeholder = "Tên đăng nhập" } })
 
-                    <div class="wrapper" style="margin-top:20px;">
-                        <span class="group-btn">
-                            <input class="btn btn-danger btn-md" type="submit" value="Đăng nhập">
-                        </span>
-                    </div>
-                    }
+
+        @Html.ValidationMessageFor(model => model.TenTaiKhoan, "", new { @class = "text-danger", @style = "font-size:20px;" })
+                        @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control input-sm chat-input", @style = "margin-bottom:20px; padding:10px;color:black;", @placeholder = "Mật khẩu" } })
+
+                        @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger", @style = "font-size:20px;" })
+
+                                        <div class="wrapper" style="margin-top:20px;">
+                                            <span class="group-btn">
+                                                <input class="btn btn-danger btn-md" type="submit" value="Đăng nhập">
+                                            </span>
+                                        </div>}
                 </div>
             </div>
         </div>
